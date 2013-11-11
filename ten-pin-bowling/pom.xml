@@ -4,6 +4,11 @@
   <groupId>bet-genius</groupId>
   <artifactId>ten-pin-bowling</artifactId>
   <version>0.0.1-SNAPSHOT</version>
+  <properties>  
+     <jbehave.version>3.8</jbehave.version>  
+     <junit.version>4.11</junit.version>  
+     <failsafe.and.surefire.version>2.16</failsafe.and.surefire.version>  
+   </properties> 
   <dependencies>
   	<dependency>
 		<groupId>org.slf4j</groupId>
@@ -39,13 +44,14 @@
 	<dependency>
 		<groupId>junit</groupId>
 		<artifactId>junit</artifactId>
-		<version>4.7</version>
+		<version>4.11</version>
 		<scope>test</scope>
 	</dependency> 
 	<dependency>
 		<groupId>org.jvnet.hudson.main</groupId>
 		<artifactId>hudson-core</artifactId>
 		<version>2.2.1</version>
+		<scope>test</scope>
 	</dependency>     
 	<dependency>
 		<groupId>org.hamcrest</groupId>
@@ -74,12 +80,14 @@
 	<dependency>
       <groupId>org.jbehave</groupId>
       <artifactId>jbehave-core</artifactId>
-      <version>3.8</version>
+      <version>${jbehave.version}</version>
+      <scope>test</scope>
     </dependency>   
 	<dependency>
 		<groupId>de.codecentric</groupId>
 		<artifactId>jbehave-junit-runner</artifactId>
 		<version>1.0.2</version>
+		<scope>test</scope>
 	</dependency>   
   </dependencies>
 	<build>
@@ -99,7 +107,26 @@
 	                    <downloadJavadocs>true</downloadJavadocs>
 	                </configuration>
             </plugin>
-            <plugin>
+            <plugin>  
+	         <groupId>org.apache.maven.plugins</groupId>  
+	         <artifactId>maven-failsafe-plugin</artifactId>  
+	         <version>${failsafe.and.surefire.version}</version>  
+	         <executions>  
+	           <execution>  
+	             <id>integration-test</id>  
+	             <goals>  
+	               <goal>integration-test</goal>  
+	               <goal>verify</goal>  
+	             </goals>  
+	           </execution>  
+	         </executions>  
+	         <configuration>  
+	           <includes>  
+	             <include>**/*.story</include>  
+	           </includes>  
+	         </configuration>  
+	       </plugin>  
+	       <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>2.3.2</version>
@@ -141,7 +168,7 @@
 						<phase>integration-test</phase>
 						<configuration>
 							<includes>
-								<include>**/*Scenarios.java</include>
+								<include>**/*.story</include>
 							</includes>
 							<ignoreFailureInStories>true</ignoreFailureInStories>
 							<ignoreFailureInView>false</ignoreFailureInView>
@@ -161,7 +188,7 @@
 						<id>unpack-jbehave-site-resources</id>
 						<phase>generate-resources</phase>
 						<goals>
-							<goal>unpack-dependencies</goal>
+							<goal>unpack</goal>
 						</goals>
 						<configuration>
 							<overwriteReleases>false</overwriteReleases>
@@ -183,7 +210,7 @@
 						<id>unpack-jbehave-reports-resources</id>
 						<phase>generate-resources</phase>
 						<goals>
-							<goal>unpack-dependencies</goal>
+							<goal>unpack</goal>
 						</goals>
 						<configuration>
 							<overwriteReleases>false</overwriteReleases>

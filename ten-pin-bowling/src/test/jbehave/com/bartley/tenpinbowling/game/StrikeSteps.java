@@ -1,4 +1,6 @@
-package com.betgenius.tenpinbowling;
+package com.bartley.tenpinbowling.game;
+
+import static org.junit.Assert.assertEquals;
 
 import java.util.List;
 
@@ -6,47 +8,36 @@ import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
 
-import com.betgenius.tenpinbowling.frame.GameFrame;
-import com.betgenius.tenpinbowling.game.TenPinGame;
+import com.bartley.tenpinbowling.frame.GameFrame;
+import com.bartley.tenpinbowling.game.TenPinGame;
 
 
 
-public class StrikeScenarios {
+public class StrikeSteps {
 	TenPinGame game;
 
-	@Given("A game has started with 1 player ")
-	public void givenGameHasStarted(){
-		String[] names = {"Tony"};
-		game = new TenPinGame(names,2);
+	@Given("A game has started with with players named $names for $numbOfFrames Frames ")
+	public void givenGameHasStarted(List<String> names, int numbOfFrames){
+		game = new TenPinGame((String[])names.toArray(),numbOfFrames);
 
 	}
 
-	@Then("His score for the first roll should be 19"  )
-	public  void thenXshouldBe() {
+	@When("When player takes his 2nd roll, he gets a $rollScore ")
+	public void whenBowlsAgainGets3(int rollScore){
+		game.processRoll(rollScore);
+	}
+
+	@When("When player takes his 3rd roll, he gets a $rollScore ")
+	public void whenBowlsAgainGets6(int rollScore){
+		game.processRoll(rollScore);
+	}
+
+	@Then("His score for that frame should be $frameScore"  )
+	public  void thenXshouldBe(int frameScore) {
 		List<GameFrame> frame = game.getPlayers()[0].getGameFrames();
-		int bonus = frame.get(0).getBonus();
-
+		int bonus = frame.get(0).getFrameTotal();
+		assertEquals("The score should be " + frameScore,bonus,frameScore);
 	}
 
 
-	@When("Player bowls again he gets a 3")
-	public void whenBowlsAgainGets3(){
-		game.processRoll(3);
-	}
-
-	@When("Player bowls again he gets a 6")
-	public void whenBowlsAgainGets6(){
-		game.processRoll(6);
-	}
-
-
-	@When("With the first a roll, he gets a strike ")
-	public  void whenPlayer1GetsStrike() {
-		game.processRoll(10);
-	}
-
-	@When("Player rolls he gets a 10")
-	public void whenTakes1stBowlsGets10(){
-		game.processRoll(10);
-	}
 }

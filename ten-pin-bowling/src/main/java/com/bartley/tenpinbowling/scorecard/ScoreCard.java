@@ -1,10 +1,10 @@
-package com.betgenius.tenpinbowling.scorecard;
+package com.bartley.tenpinbowling.scorecard;
 
 import java.util.List;
 
-import com.betgenius.tenpinbowling.frame.GameFrame;
-import com.betgenius.tenpinbowling.util.DefinedConstants;
-import com.betgenius.tenpinbowling.util.DefinedConstants.FRAME_CONTEXT;
+import com.bartley.tenpinbowling.frame.GameFrame;
+import com.bartley.tenpinbowling.util.DefinedConstants;
+import com.bartley.tenpinbowling.util.DefinedConstants.FRAME_CONTEXT;
 
 
 public interface ScoreCard {

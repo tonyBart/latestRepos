@@ -1,14 +1,14 @@
-package com.betgenius.tenpinbowling.game;
+package com.bartley.tenpinbowling.game;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
-import com.betgenius.tenpinbowling.frame.GameFrame;
-import com.betgenius.tenpinbowling.player.Player;
-import com.betgenius.tenpinbowling.player.PlayerImpl;
-import com.betgenius.tenpinbowling.util.DefinedConstants;
-import com.betgenius.tenpinbowling.util.DefinedConstants.FRAME_CONTEXT;
+import com.bartley.tenpinbowling.frame.GameFrame;
+import com.bartley.tenpinbowling.player.Player;
+import com.bartley.tenpinbowling.player.PlayerImpl;
+import com.bartley.tenpinbowling.util.DefinedConstants;
+import com.bartley.tenpinbowling.util.DefinedConstants.FRAME_CONTEXT;
 
 public class TenPinGame {
 	public static void main1(String[] args) {
@@ -43,14 +43,14 @@ public class TenPinGame {
 				boolean isThirdRoll = false;
 				FRAME_CONTEXT rollResult = null;
 				while(rollResult != DefinedConstants.FRAME_CONTEXT.FRAME_ENDED ){
-					if(isFirstRoll){
+					if(isFirstRoll || rollResult == DefinedConstants.FRAME_CONTEXT.EXTRA){
 
 						firstRoll = gen.nextInt(10);
 						rollResult = game.processRoll(firstRoll);
 						isFirstRoll = false;
 						isSecRoll = true;
 					}else{
-						if(isSecRoll){
+						if(isSecRoll || rollResult == DefinedConstants.FRAME_CONTEXT.EXTRA_SPARE){
 							// Take into account what is scored in the first roll
 							int secRoll = gen.nextInt(10 - firstRoll );
 							//
@@ -60,7 +60,7 @@ public class TenPinGame {
 								isThirdRoll = true;
 							}
 						}else{
-							if(isThirdRoll){
+							if(isThirdRoll || rollResult == DefinedConstants.FRAME_CONTEXT.EXTRA_ROLL){
 								int thirdRoll = gen.nextInt(10);
 								rollResult =  game.processRoll(thirdRoll);
 								isThirdRoll = false;
@@ -129,13 +129,13 @@ public class TenPinGame {
 		DefinedConstants.FRAME_CONTEXT rollResult = null;
 
 		while(rollResult != DefinedConstants.FRAME_CONTEXT.FRAME_ENDED){
-			if(isFirstRoll){
+			if(isFirstRoll || rollResult == DefinedConstants.FRAME_CONTEXT.EXTRA){
 
 				rollResult = players[whichPlayer].setFrameRollResult(DefinedConstants.TYPES_OF_ROLLS.FIRST_ROLL, currentFrame, roll);
 				isFirstRoll = false;
 				isSecRoll = true;
 			}else{
-				if(isSecRoll){
+				if(isSecRoll || rollResult == DefinedConstants.FRAME_CONTEXT.EXTRA_SPARE){
 					//
 					isSecRoll = false;
 					rollResult = players[whichPlayer].setFrameRollResult(DefinedConstants.TYPES_OF_ROLLS.SECOND_ROLL,currentFrame, roll);
@@ -143,7 +143,7 @@ public class TenPinGame {
 						isThirdRoll = true;
 					}
 				}else{
-					if(isThirdRoll){
+					if(isThirdRoll || rollResult == DefinedConstants.FRAME_CONTEXT.EXTRA_ROLL){
 						rollResult = players[whichPlayer].setFrameRollResult(DefinedConstants.TYPES_OF_ROLLS.THIRD_ROLL,currentFrame, roll);
 						isThirdRoll = false;
 					}

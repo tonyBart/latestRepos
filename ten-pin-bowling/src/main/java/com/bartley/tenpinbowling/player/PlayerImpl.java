@@ -1,11 +1,11 @@
-package com.betgenius.tenpinbowling.player;
+package com.bartley.tenpinbowling.player;
 
 import java.util.List;
 
-import com.betgenius.tenpinbowling.frame.GameFrame;
-import com.betgenius.tenpinbowling.scorecard.ScoreCard;
-import com.betgenius.tenpinbowling.scorecard.ScoreCardImpl;
-import com.betgenius.tenpinbowling.util.DefinedConstants;
+import com.bartley.tenpinbowling.frame.GameFrame;
+import com.bartley.tenpinbowling.scorecard.ScoreCard;
+import com.bartley.tenpinbowling.scorecard.ScoreCardImpl;
+import com.bartley.tenpinbowling.util.DefinedConstants;
 
 public class PlayerImpl implements Player {
 	private ScoreCard scoreCard;

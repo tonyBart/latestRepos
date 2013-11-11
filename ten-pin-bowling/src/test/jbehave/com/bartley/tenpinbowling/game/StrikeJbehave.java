@@ -1,4 +1,4 @@
-package com.betgenius.tenpinbowling;
+package com.bartley.tenpinbowling.game;
 
 import java.util.Arrays;
 import java.util.List;
@@ -11,19 +11,19 @@ import org.junit.runner.RunWith;
 import de.codecentric.jbehave.junit.monitoring.JUnitReportingRunner;
 
 @RunWith(JUnitReportingRunner.class)
-public class StrikeJbehaveTest extends JUnitStories {
+public class StrikeJbehave extends JUnitStories {
 
-	public StrikeJbehaveTest() {
+	public StrikeJbehave() {
 		super();
 	}
 
 	@Override
 	public InjectableStepsFactory stepsFactory() {
-		return new InstanceStepsFactory(configuration(), new StrikeScenarios());
+		return new InstanceStepsFactory(configuration(), new StrikeSteps());
 	}
 
 	@Override
 	protected List<String> storyPaths() {
-		return Arrays.asList("com/betgenius/tenpinbowling/StrikeScenarios.java");
+		return Arrays.asList("com/bartley/tenpinbowling/game/Strikes.story");
 	}
 }
